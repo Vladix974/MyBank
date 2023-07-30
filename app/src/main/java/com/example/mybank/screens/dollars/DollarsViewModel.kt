@@ -12,6 +12,7 @@ import retrofit2.Response
 class DollarsViewModel :ViewModel() {
 
   private var repo = Repository()
+
    val myGotivka : MutableLiveData<Response<Gotivka>> = MutableLiveData()
    val myBezgotivka : MutableLiveData<Response<Bezgotivka>> = MutableLiveData()
 

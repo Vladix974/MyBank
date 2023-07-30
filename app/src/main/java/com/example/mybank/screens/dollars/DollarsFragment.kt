@@ -24,7 +24,6 @@ class DollarsFragment : Fragment(R.layout.fragment_dollars) {
         var listDollarsBezGot: List<BezgotivkaItem>
 
         Glide.with(this)
-            //.asBitmap()
             .load(url)
             .into(binding.img)
 
@@ -62,7 +61,6 @@ class DollarsFragment : Fragment(R.layout.fragment_dollars) {
         binding.apply {
             name.text = listDollarsBezGot[1].ccy
             //безготівковий курс
-
             buyBez.text = (((listDollarsBezGot[1].buy).toFloat()*100.0).roundToInt() /100.0).toString()
             saleBez.text = (((listDollarsBezGot[1].sale).toFloat()*100.0).roundToInt() /100.0).toString()
         }
