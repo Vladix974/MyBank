@@ -28,10 +28,13 @@ class RootFragment : Fragment(R.layout.fragment_root) {
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, pos ->
             when (pos) {
                 0 -> {
-                    tab.setIcon(R.drawable.dollar)
+                    tab.setIcon(R.drawable.mono_logo)
                 }
                 1 -> {
-                    tab.setIcon(R.drawable.euro)
+                    tab.setIcon(R.drawable.nbu_logo)
+                }
+                2->{
+                    tab.setIcon(R.drawable.privat_logo)
                 }
             }
         }.attach()

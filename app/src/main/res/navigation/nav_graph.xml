@@ -16,14 +16,14 @@
     </fragment>
     <fragment
         android:id="@+id/dollarsFragment"
-        android:name="com.example.mybank.screens.dollars.DollarsFragment"
+        android:name="com.example.mybank.screens.privatSreens.PrivatFragment"
         android:label="fragment_dollars"
-        tools:layout="@layout/fragment_dollars" />
+        tools:layout="@layout/fragment_privat" />
     <fragment
         android:id="@+id/euroFragment"
-        android:name="com.example.mybank.screens.euro.EuroFragment"
+        android:name="com.example.mybank.screens.monoSreens.MonoFragment"
         android:label="fragment_euro"
-        tools:layout="@layout/fragment_euro" />
+        tools:layout="@layout/fragment_mono" />
     <fragment
         android:id="@+id/rootFragment"
         android:name="com.example.mybank.screens.root.RootFragment"
