@@ -5,8 +5,6 @@ import java.util.Currency
 
 class CurrencyItem {
     private lateinit var mCurrencyCod : String
-
-
     fun CurrencyItem (currencyCod: String){
         mCurrencyCod = currencyCod
     }

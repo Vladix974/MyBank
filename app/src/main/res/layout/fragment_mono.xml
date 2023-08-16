@@ -85,7 +85,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-            android:id="@+id/tvCodOfCurrency1"
+            android:id="@+id/currencySpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -107,7 +107,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button"
-            app:layout_constraintTop_toTopOf="@+id/tvCodOfCurrency1" />
+            app:layout_constraintTop_toTopOf="@+id/currencySpinner" />
 
         <EditText
             android:id="@+id/editTextCurrency1"
@@ -119,7 +119,7 @@
             android:inputType="number"
             app:layout_constraintEnd_toStartOf="@+id/button"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvCodOfCurrency1" />
+            app:layout_constraintTop_toBottomOf="@+id/currencySpinner" />
 
         <EditText
             android:id="@+id/editTextCurrency2"
@@ -198,7 +198,6 @@
             android:fontFamily="@font/alegreya_sc_bold"
             android:text="Українська гривня"
             android:textColor="@color/black"
-
             android:textSize="23sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
