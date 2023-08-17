@@ -6,5 +6,6 @@ data class MonoCurrencyItem(
     val date: Int,
     val rateBuy: Double,
     val rateCross: Double,
-    val rateSell: Double
+    val rateSell: Double,
+    val currencyDetails: String?
 )
