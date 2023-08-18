@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sc_bold"
         android:text="0.000"
-        android:textColor="@color/green"
+        android:textColor="@color/red"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/sell"
         app:layout_constraintStart_toStartOf="@+id/tvBuy"

@@ -65,7 +65,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/alegreya_sc_bold"
         android:text="Дата: "
-        android:textColor="@color/red"
+        android:textColor="@color/start_color"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/tvDateDetails"
         app:layout_constraintStart_toEndOf="@+id/tvCodOfCurrencyDetails"
