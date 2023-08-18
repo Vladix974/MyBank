@@ -16,7 +16,11 @@ class Repository {
     suspend fun getNbuCurrency(): Response<NbuCurrency> {
         return NbuRetrofitInstance.apiNbu.getCurrencyNbu()
     }
-    suspend fun getPrivatCurrency():Response<PrivatCurrency>{
-        return PrivatRetrofitInstance.apiPrivat.getCurrencyPrivat()
+    suspend fun getPrivatCurrencyBezGot():Response<PrivatCurrency>{
+        return PrivatRetrofitInstance.apiPrivat.getCurrencyPrivatBezGot()
     }
+    suspend fun getPrivatCurrencyGot():Response<PrivatCurrency>{
+        return PrivatRetrofitInstance.apiPrivat.getCurrencyPrivatGot()
+    }
+
 }

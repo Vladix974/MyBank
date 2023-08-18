@@ -4,5 +4,7 @@ data class PrivatCurrencyItem(
     val base_ccy: String,
     val buy: String,
     val ccy: String,
-    val sale: String
+    val sale: String,
+
 )
+//val gotBezGot : String

@@ -7,5 +7,8 @@ import retrofit2.http.GET
 interface PrivatApiInstance {
 
     @GET("p24api/pubinfo?exchange&coursid=11")
-    suspend fun getCurrencyPrivat():Response<PrivatCurrency>
+    suspend fun getCurrencyPrivatBezGot():Response<PrivatCurrency>
+
+    @GET("p24api/pubinfo?exchange&coursid=5")
+    suspend fun getCurrencyPrivatGot():Response<PrivatCurrency>
 }

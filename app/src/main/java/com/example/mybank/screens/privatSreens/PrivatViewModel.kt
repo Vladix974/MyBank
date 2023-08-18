@@ -12,11 +12,13 @@ class PrivatViewModel :ViewModel() {
 
   private val repo = Repository()
 
-   val myCurrencyPrivat : MutableLiveData<Response<PrivatCurrency>> = MutableLiveData()
+   val myCurrencyPrivatBezGot : MutableLiveData<Response<PrivatCurrency>> = MutableLiveData()
+   val myCurrencyPrivatGot : MutableLiveData<Response<PrivatCurrency>> = MutableLiveData()
 
     fun getPrivat(){
         viewModelScope.launch {
-            myCurrencyPrivat.value = repo.getPrivatCurrency()
+            myCurrencyPrivatBezGot.value = repo.getPrivatCurrencyGot()
+            myCurrencyPrivatGot.value = repo.getPrivatCurrencyBezGot()
         }
     }
 }
