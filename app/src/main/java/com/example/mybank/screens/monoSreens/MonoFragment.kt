@@ -78,6 +78,7 @@ open class MonoFragment : Fragment(R.layout.fragment_mono) {
                     val selectedCurrencyCode = currencyCodes[position]
                     binding.editTextCurrency1.clearFocus()
                     binding.editTextCurrency2.clearFocus()
+                    binding.tvInformation2.text = "Ви ще нічого не перевели ☺"
                     val filteredBanks = list.body()?.filter { bank ->
                         currencyConvertor = CurrencyConvertor(bank.currencyCodeA.toString())
                         currencyConvertor.currencyDetails?.first == selectedCurrencyCode
