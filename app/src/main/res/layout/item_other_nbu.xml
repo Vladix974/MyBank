@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tvNameOfCurrencyDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sc_bold"
+        android:text="Українська гривня"
+        android:textColor="@color/black"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCodOfCurrencyDetails" />
+
+    <TextView
+        android:id="@+id/tvCodOfCurrencyDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sc_bold"
+        android:text="UAH"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/buyDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/alegreya_sc_bold"
+        android:text="Купівля"
+        android:textColor="@color/green"
+        android:textSize="20sp"
+
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvNameOfCurrencyDetails" />
+
+    <TextView
+        android:id="@+id/tvBuyDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/alegreya_sc_bold"
+        android:text="0.000"
+        android:textColor="@color/green"
+        android:textSize="20sp"
+
+        app:layout_constraintBottom_toBottomOf="@+id/buyDetails"
+
+        app:layout_constraintStart_toEndOf="@+id/buyDetails"
+        app:layout_constraintTop_toTopOf="@+id/buyDetails"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/alegreya_sc_bold"
+        android:text="Дата: "
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvDateDetails"
+        app:layout_constraintStart_toEndOf="@+id/tvCodOfCurrencyDetails"
+        app:layout_constraintTop_toTopOf="@+id/tvBuyDetails" />
+
+    <TextView
+        android:id="@+id/tvDateDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/alegreya_sc_bold"
+        android:text="0.000"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/green"
+        android:textSize="20sp"
+
+        app:layout_constraintBottom_toBottomOf="@+id/tvDate"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintTop_toTopOf="@+id/tvDate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

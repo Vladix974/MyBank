@@ -174,7 +174,7 @@
             android:id="@+id/tvInformation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="1 = UAH"
             app:layout_constraintEnd_toStartOf="@+id/tvCodOfCurrency2"
             app:layout_constraintStart_toEndOf="@+id/currencySpinner"
             app:layout_constraintTop_toTopOf="@+id/currencySpinner" />
@@ -196,6 +196,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

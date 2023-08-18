@@ -15,7 +15,7 @@ class NbuFragment: Fragment(R.layout.fragment_nbu) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentNbuBinding.bind(view)
 
-        binding.rvCurrenties.adapter = adapterNbu
+        binding.recyclerViewPopular.adapter = adapterNbu
 
         val viewModel = ViewModelProvider(this)[NbuViewModel::class.java]
 
