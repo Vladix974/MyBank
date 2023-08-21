@@ -1,13 +1,18 @@
 package com.example.mybank.screens.monoSreens
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -23,6 +28,7 @@ open class MonoFragment : Fragment(R.layout.fragment_mono) {
     private lateinit var binding: FragmentMonoBinding
     private var adapterMono = MonoAdapter()
     private var adapterMonoOther = MonoAdapterOther()
+    lateinit var rotationAnimator: ObjectAnimator
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,8 +46,11 @@ open class MonoFragment : Fragment(R.layout.fragment_mono) {
         viewModel.myCurrencyMono.observe(viewLifecycleOwner) { list ->
             list.body()?.let { adapterMonoOther.addMonoCurrencyDetails(it) }
         }
-
         setupCurrencySpinner() // Виклик функції налаштування спіннера
+
+        // Оголошення анімації обертання для ImageButton
+        rotationAnimator = ObjectAnimator.ofFloat(binding.button, "rotation", 0f, 180f)
+        rotationAnimator.duration = 300 // тривалість анімації
     }
 
     private fun setupCurrencySpinner() {
@@ -86,12 +95,16 @@ open class MonoFragment : Fragment(R.layout.fragment_mono) {
 
                     adapterMonoOther.addMonoCurrencyDetails(filteredBanks)
 
+
                     if (filteredBanks.isNotEmpty()) {
                         val selectedBank = filteredBanks[0]
 
                         binding.editTextCurrency1.setOnFocusChangeListener { _, hasFocus ->
                             if (hasFocus) {
                                 binding.editTextCurrency1.text.clear()
+                                if (binding.button.rotation == 0f) {
+                                    rotationAnimator.start()
+                                }
                                 binding.button.setOnClickListener {
                                     val editText1Text = binding.editTextCurrency1.text.toString()
                                     if (editText1Text.isNotEmpty()) {
@@ -136,6 +149,9 @@ open class MonoFragment : Fragment(R.layout.fragment_mono) {
                         binding.editTextCurrency2.setOnFocusChangeListener { _, hasFocus ->
                             if (hasFocus) {
                                 binding.editTextCurrency2.text.clear()
+                                if (binding.button.rotation == 180f) {
+                                    rotationAnimator.reverse()
+                                }
                                 binding.button.setOnClickListener {
                                     val editText2Text = binding.editTextCurrency2.text.toString()
                                     if (editText2Text.isNotEmpty()) {
@@ -187,11 +203,14 @@ open class MonoFragment : Fragment(R.layout.fragment_mono) {
                     } else {
                         binding.tvInformation.text = ""
                     }
+
+
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     // Нічого не вибрано
                 }
+
             }
         }
     }

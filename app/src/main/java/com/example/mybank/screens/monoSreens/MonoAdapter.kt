@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.mybank.R
 import com.example.mybank.data.api.model.mono.MonoCurrencyItem
 
@@ -21,17 +22,30 @@ class MonoAdapter : RecyclerView.Adapter<MonoAdapter.MonoHolder>() {
 
         @SuppressLint("SetTextI18n")
         fun bind(bank: MonoCurrencyItem) = with(binding) {
+            if(bank.currencyCodeA == 840 ||(bank.currencyCodeA == 978 && bank.currencyCodeB == 980)||bank.currencyCodeA == 985){
             currencyConvertor = CurrencyConvertor(bank.currencyCodeA.toString())
+
             if (currencyConvertor.currencyDetails?.first != null && currencyConvertor.currencyDetails?.second != null) {
                 tvCodOfCurrency.text = currencyConvertor.currencyDetails?.first
             } else {
                 tvCodOfCurrency.text = "No information"
             }
-            tvBuy.text =
-                (((bank.rateBuy).toFloat() * 100.0).roundToInt() / 100.0).toString() + " грн"
-            tvSell.text =
-                (((bank.rateSell).toFloat() * 100.0).roundToInt() / 100.0).toString() + " грн"
-
+                if(bank.rateBuy!=0.0 || bank.rateSell!=0.0) {
+                    tvBuy.text =
+                        (((bank.rateBuy).toFloat() * 100.0).roundToInt() / 100.0).toString() + " грн"
+                    tvSell.text =
+                        (((bank.rateSell).toFloat() * 100.0).roundToInt() / 100.0).toString() + " грн"
+                }else{
+                    tvBuy.text =
+                        (((bank.rateCross).toFloat() * 100.0).roundToInt() / 100.0).toString() + " грн"
+                    tvSell.text =
+                        (((bank.rateCross).toFloat() * 100.0).roundToInt() / 100.0).toString() + " грн"
+                }
+            Glide.with(binding.root)
+                .load(currencyConvertor.currencyDetails?.third)
+                .centerCrop()
+                .into(imgOfCountry)
+        }
         }
 
     }
@@ -42,11 +56,12 @@ class MonoAdapter : RecyclerView.Adapter<MonoAdapter.MonoHolder>() {
     }
 
     override fun getItemCount(): Int {
-        return minOf(list.size,2)
+        return list.count{it.currencyCodeA == 840 ||(it.currencyCodeA == 978 && it.currencyCodeB == 980)||it.currencyCodeA == 985}
     }
 
     override fun onBindViewHolder(holder: MonoHolder, position: Int) {
-            holder.bind(list[position])
+           val filteredItems = list.filter { it.currencyCodeA == 840 ||(it.currencyCodeA == 978 && it.currencyCodeB == 980)||it.currencyCodeA == 985 }
+            holder.bind(filteredItems[position])
 
     }
 
