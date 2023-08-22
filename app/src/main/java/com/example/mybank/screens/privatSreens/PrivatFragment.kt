@@ -1,5 +1,6 @@
 package com.example.mybank.screens.privatSreens
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
@@ -21,6 +22,7 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
     private lateinit var binding: FragmentPrivatBinding
     private var adapterPrivat = PrivatAdapter()
     private var adapterPrivatOther = PrivatAdapterOther()
+    lateinit var rotationAnimator: ObjectAnimator
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentPrivatBinding.bind(view)
@@ -35,6 +37,9 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
         }
 
         setupCurrencySpinner()
+
+        rotationAnimator = ObjectAnimator.ofFloat(binding.button, "rotation", 0f, 180f)
+        rotationAnimator.duration = 300 // тривалість анімації
     }
 
     private fun setupCurrencySpinner() {
@@ -63,9 +68,7 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                         }?.distinct() ?: emptyList()
 
                         val currencyAdapter = ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_spinner_item,
-                            currencyCodes
+                            requireContext(), android.R.layout.simple_spinner_item, currencyCodes
                         )
                         currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         currencySpinner.adapter = currencyAdapter
@@ -73,10 +76,7 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                             object : AdapterView.OnItemSelectedListener {
                                 @SuppressLint("SetTextI18n")
                                 override fun onItemSelected(
-                                    parent: AdapterView<*>?,
-                                    view: View?,
-                                    position: Int,
-                                    id: Long
+                                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
                                 ) {
                                     val selectedCurrencyCode = currencyCodes[position]
                                     binding.editTextCurrency1.clearFocus()
@@ -95,6 +95,9 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                                         binding.editTextCurrency1.setOnFocusChangeListener { _, hasFocus ->
                                             if (hasFocus) {
                                                 binding.editTextCurrency1.text.clear()
+                                                if (binding.button.rotation == 0f) {
+                                                    rotationAnimator.start()
+                                                }
                                                 binding.button.setOnClickListener {
                                                     val editText1Text =
                                                         binding.editTextCurrency1.text.toString()
@@ -134,6 +137,9 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                                         binding.editTextCurrency2.setOnFocusChangeListener { _, hasFocus ->
                                             if (hasFocus) {
                                                 binding.editTextCurrency2.text.clear()
+                                                if (binding.button.rotation == 180f) {
+                                                    rotationAnimator.start()
+                                                }
                                                 binding.button.setOnClickListener {
                                                     val editText2Text =
                                                         binding.editTextCurrency2.text.toString()
@@ -177,12 +183,13 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
 
                                     }
                                 }
+
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
                                     // Нічого не вибрано
                                 }
                             }
                     }
-                }else{
+                } else {
                     viewModel.myCurrencyPrivatBezGot.observe(viewLifecycleOwner) { list ->
                         // Отримати унікальні коди валют зі списку банків
                         val currencyCodes = list.body()?.mapNotNull { bank ->
@@ -190,9 +197,7 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                         }?.distinct() ?: emptyList()
 
                         val currencyAdapter = ArrayAdapter(
-                            requireContext(),
-                            android.R.layout.simple_spinner_item,
-                            currencyCodes
+                            requireContext(), android.R.layout.simple_spinner_item, currencyCodes
                         )
                         currencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         currencySpinner.adapter = currencyAdapter
@@ -200,10 +205,7 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                             object : AdapterView.OnItemSelectedListener {
                                 @SuppressLint("SetTextI18n")
                                 override fun onItemSelected(
-                                    parent: AdapterView<*>?,
-                                    view: View?,
-                                    position: Int,
-                                    id: Long
+                                    parent: AdapterView<*>?, view: View?, position: Int, id: Long
                                 ) {
                                     val selectedCurrencyCode = currencyCodes[position]
                                     binding.editTextCurrency1.clearFocus()
@@ -304,6 +306,7 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
 
                                     }
                                 }
+
                                 override fun onNothingSelected(parent: AdapterView<*>?) {
                                     // Нічого не вибрано
                                 }

@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Name_Bank">Ваш банк</string>
     <string name="UAH">грн</string>
+    <string name="go_to_site">Вибачте, але інформацію про цю валюту \n
+        Ви можете переглянути ЛИШЕ за посиланням нижче \n <b><u><font color="#0000FF">Посилання на сайт</font></u></b></string>
 </resources>
