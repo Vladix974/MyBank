@@ -3,6 +3,8 @@ package com.example.mybank.screens.privatSreens
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -11,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.mybank.R
+import com.example.mybank.data.api.model.nbu.NbuCurrencyItem
+import com.example.mybank.data.api.model.privat.PrivatCurrencyItem
 import com.example.mybank.databinding.FragmentPrivatBinding
 import com.example.mybank.screens.monoSreens.CurrencyConvertor
 import com.example.mybank.screens.monoSreens.MonoViewModel
@@ -23,6 +27,8 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
     private var adapterPrivat = PrivatAdapter()
     private var adapterPrivatOther = PrivatAdapterOther()
     lateinit var rotationAnimator: ObjectAnimator
+    private var editText1ChangingByCode = false
+    private var editText2ChangingByCode = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentPrivatBinding.bind(view)
@@ -98,39 +104,28 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                                                 if (binding.button.rotation == 0f) {
                                                     rotationAnimator.start()
                                                 }
-                                                binding.button.setOnClickListener {
-                                                    val editText1Text =
-                                                        binding.editTextCurrency1.text.toString()
-                                                    if (editText1Text.isNotEmpty()) {
-                                                        val editText1Value =
-                                                            editText1Text.toDouble()
-                                                        val result =
-                                                            (((editText1Value * selectedBank.sale.toDouble()).toFloat() * 100.0).roundToInt() / 100.0)
-                                                        binding.editTextCurrency2.setText(result.toString())
-
-                                                        val editText1Text1 =
-                                                            binding.editTextCurrency1.text.toString()
-                                                                .replace(",", "")
-                                                        val editText2Text2 =
-                                                            binding.editTextCurrency2.text.toString()
-                                                                .replace(",", "")
-                                                        val formattedEditText1Value =
-                                                            NumberFormat.getNumberInstance()
-                                                                .format(editText1Text1.toDouble())
-                                                        val formattedEditText2Value =
-                                                            NumberFormat.getNumberInstance()
-                                                                .format(editText2Text2.toDouble())
-
-                                                        binding.tvInformation2.text =
-                                                            "$formattedEditText1Value $selectedCurrencyCode = $formattedEditText2Value UAH"
-                                                    } else {
-                                                        Toast.makeText(
-                                                            requireContext(),
-                                                            "Будь ласка, введіть суму, яку потрібно перевести",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
+                                                binding.editTextCurrency1.addTextChangedListener(object :
+                                                    TextWatcher {
+                                                    override fun beforeTextChanged(
+                                                        s: CharSequence?,
+                                                        start: Int,
+                                                        count: Int,
+                                                        after: Int
+                                                    ) {
                                                     }
-                                                }
+
+                                                    override fun onTextChanged(
+                                                        s: CharSequence?,
+                                                        start: Int,
+                                                        before: Int,
+                                                        count: Int
+                                                    ) {
+                                                        changeEditText1(selectedBank,selectedCurrencyCode)
+                                                    }
+
+                                                    override fun afterTextChanged(s: Editable?) {
+                                                    }
+                                                })
                                             }
                                         }
 
@@ -138,42 +133,30 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                                             if (hasFocus) {
                                                 binding.editTextCurrency2.text.clear()
                                                 if (binding.button.rotation == 180f) {
-                                                    rotationAnimator.start()
+                                                    rotationAnimator.reverse()
                                                 }
-                                                binding.button.setOnClickListener {
-                                                    val editText2Text =
-                                                        binding.editTextCurrency2.text.toString()
-                                                    if (editText2Text.isNotEmpty()) {
-                                                        val editText2Value =
-                                                            editText2Text.toDouble()
-                                                        val result =
-                                                            (((editText2Value / selectedBank.sale.toDouble()).toFloat() * 100.0).roundToInt() / 100.0)
-                                                        binding.editTextCurrency1.setText(result.toString())
-
-                                                        val editText1Text1 =
-                                                            binding.editTextCurrency1.text.toString()
-                                                                .replace(",", "")
-                                                        val editText2Text2 =
-                                                            binding.editTextCurrency2.text.toString()
-                                                                .replace(",", "")
-                                                        val formattedEditText1Value =
-                                                            NumberFormat.getNumberInstance()
-                                                                .format(editText1Text1.toDouble())
-                                                        val formattedEditText2Value =
-                                                            NumberFormat.getNumberInstance()
-                                                                .format(editText2Text2.toDouble())
-
-                                                        binding.tvInformation2.text =
-                                                            "$formattedEditText1Value $selectedCurrencyCode = $formattedEditText2Value UAH"
-                                                    } else {
-                                                        Toast.makeText(
-                                                            requireContext(),
-                                                            "Будь ласка, введіть суму, яку потрібно перевести",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
+                                                binding.editTextCurrency2.addTextChangedListener(object :
+                                                    TextWatcher {
+                                                    override fun beforeTextChanged(
+                                                        s: CharSequence?,
+                                                        start: Int,
+                                                        count: Int,
+                                                        after: Int
+                                                    ) {
                                                     }
-                                                }
 
+                                                    override fun onTextChanged(
+                                                        s: CharSequence?,
+                                                        start: Int,
+                                                        before: Int,
+                                                        count: Int
+                                                    ) {
+                                                        changeEditText2(selectedBank,selectedCurrencyCode)
+                                                    }
+
+                                                    override fun afterTextChanged(s: Editable?) {
+                                                    }
+                                                })
                                             }
                                         }
 
@@ -224,79 +207,62 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
                                         binding.editTextCurrency1.setOnFocusChangeListener { _, hasFocus ->
                                             if (hasFocus) {
                                                 binding.editTextCurrency1.text.clear()
-                                                binding.button.setOnClickListener {
-                                                    val editText1Text =
-                                                        binding.editTextCurrency1.text.toString()
-                                                    if (editText1Text.isNotEmpty()) {
-                                                        val editText1Value =
-                                                            editText1Text.toDouble()
-                                                        val result =
-                                                            (((editText1Value * selectedBank.sale.toDouble()).toFloat() * 100.0).roundToInt() / 100.0)
-                                                        binding.editTextCurrency2.setText(result.toString())
-
-                                                        val editText1Text1 =
-                                                            binding.editTextCurrency1.text.toString()
-                                                                .replace(",", "")
-                                                        val editText2Text2 =
-                                                            binding.editTextCurrency2.text.toString()
-                                                                .replace(",", "")
-                                                        val formattedEditText1Value =
-                                                            NumberFormat.getNumberInstance()
-                                                                .format(editText1Text1.toDouble())
-                                                        val formattedEditText2Value =
-                                                            NumberFormat.getNumberInstance()
-                                                                .format(editText2Text2.toDouble())
-
-                                                        binding.tvInformation2.text =
-                                                            "$formattedEditText1Value $selectedCurrencyCode = $formattedEditText2Value UAH"
-                                                    } else {
-                                                        Toast.makeText(
-                                                            requireContext(),
-                                                            "Будь ласка, введіть суму, яку потрібно перевести",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                    }
+                                                if (binding.button.rotation == 0f) {
+                                                    rotationAnimator.start()
                                                 }
+                                                binding.editTextCurrency1.addTextChangedListener(object :
+                                                    TextWatcher {
+                                                    override fun beforeTextChanged(
+                                                        s: CharSequence?,
+                                                        start: Int,
+                                                        count: Int,
+                                                        after: Int
+                                                    ) {
+                                                    }
+
+                                                    override fun onTextChanged(
+                                                        s: CharSequence?,
+                                                        start: Int,
+                                                        before: Int,
+                                                        count: Int
+                                                    ) {
+                                                        changeEditText1(selectedBank,selectedCurrencyCode)
+                                                    }
+
+                                                    override fun afterTextChanged(s: Editable?) {
+                                                    }
+                                                })
                                             }
                                         }
 
                                         binding.editTextCurrency2.setOnFocusChangeListener { _, hasFocus ->
                                             if (hasFocus) {
                                                 binding.editTextCurrency2.text.clear()
-                                                binding.button.setOnClickListener {
-                                                    val editText2Text =
-                                                        binding.editTextCurrency2.text.toString()
-                                                    if (editText2Text.isNotEmpty()) {
-                                                        val editText2Value =
-                                                            editText2Text.toDouble()
-                                                        val result =
-                                                            (((editText2Value / selectedBank.sale.toDouble()).toFloat() * 100.0).roundToInt() / 100.0)
-                                                        binding.editTextCurrency1.setText(result.toString())
-
-                                                        val editText1Text1 =
-                                                            binding.editTextCurrency1.text.toString()
-                                                                .replace(",", "")
-                                                        val editText2Text2 =
-                                                            binding.editTextCurrency2.text.toString()
-                                                                .replace(",", "")
-                                                        val formattedEditText1Value =
-                                                            NumberFormat.getNumberInstance()
-                                                                .format(editText1Text1.toDouble())
-                                                        val formattedEditText2Value =
-                                                            NumberFormat.getNumberInstance()
-                                                                .format(editText2Text2.toDouble())
-
-                                                        binding.tvInformation2.text =
-                                                            "$formattedEditText1Value $selectedCurrencyCode = $formattedEditText2Value UAH"
-                                                    } else {
-                                                        Toast.makeText(
-                                                            requireContext(),
-                                                            "Будь ласка, введіть суму, яку потрібно перевести",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                    }
+                                                if (binding.button.rotation == 180f) {
+                                                    rotationAnimator.reverse()
                                                 }
+                                                binding.editTextCurrency2.addTextChangedListener(object :
+                                                    TextWatcher {
+                                                    override fun beforeTextChanged(
+                                                        s: CharSequence?,
+                                                        start: Int,
+                                                        count: Int,
+                                                        after: Int
+                                                    ) {
+                                                    }
 
+                                                    override fun onTextChanged(
+                                                        s: CharSequence?,
+                                                        start: Int,
+                                                        before: Int,
+                                                        count: Int
+                                                    ) {
+                                                        changeEditText2(selectedBank,selectedCurrencyCode)
+                                                    }
+
+                                                    override fun afterTextChanged(s: Editable?) {
+                                                    }
+                                                })
                                             }
                                         }
 
@@ -318,6 +284,71 @@ class PrivatFragment : Fragment(R.layout.fragment_privat) {
             override fun onNothingSelected(p0: AdapterView<*>?) {
                 //
             }
+        }
+    }
+    fun changeEditText1(selectedBank: PrivatCurrencyItem, selectedCurrencyCode: String) {
+        if (!editText1ChangingByCode) {
+            editText2ChangingByCode = true
+            val editText1Text =
+                binding.editTextCurrency1.text.toString()
+
+            if (editText1Text.isNotEmpty()) {
+                val editText1Value = editText1Text.toDouble()
+                val result =
+                    (((editText1Value * selectedBank.sale.toDouble()).toFloat() * 100.0).roundToInt() / 100.0)
+                binding.editTextCurrency2.setText(result.toString())
+
+                val editText1Text1 =
+                    binding.editTextCurrency1.text.toString()
+                        .replace(",", "")
+                val editText2Text2 =
+                    binding.editTextCurrency2.text.toString()
+                        .replace(",", "")
+
+                val formattedEditText1Value =
+                    NumberFormat.getNumberInstance()
+                        .format(editText1Text1.toDouble())
+                val formattedEditText2Value =
+                    NumberFormat.getNumberInstance()
+                        .format(editText2Text2.toDouble())
+
+                binding.tvInformation2.text =
+                    "$formattedEditText1Value $selectedCurrencyCode = $formattedEditText2Value UAH"
+            } else {
+
+            }
+            editText2ChangingByCode = false
+        }
+    }
+    fun changeEditText2(selectedBank: PrivatCurrencyItem, selectedCurrencyCode: String) {
+        if (!editText2ChangingByCode) {
+            editText1ChangingByCode = true
+            val editText2Text =
+                binding.editTextCurrency2.text.toString()
+            if (editText2Text.isNotEmpty()) {
+                val editText2Value = editText2Text.toDouble()
+                val result =
+                    (((editText2Value / selectedBank.sale.toDouble()).toFloat() * 100.0).roundToInt() / 100.0)
+                binding.editTextCurrency1.setText(result.toString())
+
+                val editText1Text1 =
+                    binding.editTextCurrency1.text.toString()
+                        .replace(",", "")
+                val editText2Text2 =
+                    binding.editTextCurrency2.text.toString()
+                        .replace(",", "")
+                val formattedEditText1Value =
+                    NumberFormat.getNumberInstance()
+                        .format(editText1Text1.toDouble())
+                val formattedEditText2Value =
+                    NumberFormat.getNumberInstance()
+                        .format(editText2Text2.toDouble())
+
+                binding.tvInformation2.text =
+                    "$formattedEditText1Value $selectedCurrencyCode = $formattedEditText2Value UAH"
+            } else {
+            }
+            editText1ChangingByCode = false
         }
     }
 }

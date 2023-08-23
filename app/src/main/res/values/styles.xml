@@ -2,6 +2,7 @@
 <resources>
     <style name="SpinnerItemStyle" parent="Widget.AppCompat.DropDownItem.Spinner">
         <item name="android:textSize">40sp</item>
+        <item name="android:color" >@color/black</item>
         <item name="android:fontFamily">@font/alegreya_sc_bold</item>
         <!-- Інші атрибути стилю, які вам потрібні -->
     </style>
