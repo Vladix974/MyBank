@@ -49,6 +49,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:scrollbars="horizontal"
+        android:scrollbarSize="3dp"
+        android:scrollbarStyle="outsideInset"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
@@ -152,6 +155,7 @@
             android:layout_width="105dp"
             android:layout_height="wrap_content"
             android:ems="8"
+
             android:inputType="number"
             android:maxLength="8"
             android:layout_marginEnd="5dp"
